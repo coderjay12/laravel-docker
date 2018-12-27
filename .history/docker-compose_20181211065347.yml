@@ -12,10 +12,10 @@ services:
     environment:
       # - "DB_PORT=3306"
       # - "DB_HOST=database"
-      DB_PORT: 3306
-      DB_HOST: database
+      DB_HOST: mysql
       DB_USERNAME: homestead
       DB_PASSWORD: secret
+
   # The Web Server
   web:
     build:
@@ -33,10 +33,14 @@ services:
     volumes:
       - dbdata:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: homestead
+      MYSQL_DATABASE: laravel_docker
       MYSQL_USER: homestead
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      - "MYSQL_DATABASE=homestead"
+      - "MYSQL_USER=homestead"
+      - "MYSQL_PASSWORD=secret"
+      - "MYSQL_ROOT_PASSWORD=secret"
     ports:
         - "33061:3306"
 
