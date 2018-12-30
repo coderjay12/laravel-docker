@@ -1,6 +1,5 @@
 version: '2'
 services:
-
   # The Application
   app:
     build:
@@ -26,7 +25,6 @@ services:
       - app
     ports:
       - 8080:80
-
   # The Database
   database:
     image: mysql:5.6
@@ -39,13 +37,22 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     ports:
         - "33061:3306"
-
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    depends_on:
-      - database
+    image: corbinu/docker-phpmyadmin
+    links:
+      - database:mysql
     ports:
-      - "9192:80"
+      - 8181:80
+    environment:
+      MYSQL_USERNAME: homestead
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_PORT_3306_TCP_ADDR: database
+  # composer:
+  #   restart: 'no'
+  #   image: composer/composer:php7
+  #   command: install
+  #   volumes:
+  #     - ./:/var/www
 
 volumes:
   dbdata:
